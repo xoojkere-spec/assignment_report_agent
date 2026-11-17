@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>作业工坊 · Assignment Studio</title>
+  <link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="作业工坊首页"><span class="brand-mark">文</span><span>作业工坊<small>ASSIGNMENT STUDIO</small></span></a>
+    <button class="new-task" id="new-task"><span>＋</span> 新建作业 <span class="key">N</span></button>
+    <div class="nav-label">我的作业 <span id="task-count">0</span></div>
+    <nav id="task-list" aria-label="作业列表"><p class="sidebar-empty">每一份好作业，<br>都从一个清晰的思路开始。</p></nav>
+    <div class="sidebar-bottom"><span class="local-dot"></span> 本地工作空间 <span>LOCAL</span><p>草稿与进度保存在这台电脑上</p></div>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar"><span class="breadcrumb">工作空间 <span>/</span> <b id="breadcrumb">新建作业</b></span><button id="open-config" class="connection"><i id="connection-dot"></i><span id="connection-label">配置模型</span><span class="gear">⚙</span></button></header>
+    <main>
+      <div id="notification" class="notification" role="status" hidden></div>
+      <section id="create-panel">
+        <div class="intro"><div class="eyebrow">FROM A BRIEF TO A BETTER DRAFT</div><h1>让思路，成为好作业<span>。</span></h1><p>读懂要求，理清结构，一步一步完成你的写作。</p></div>
+        <div class="start-grid"><form id="create-form" class="card upload-card">
+          <div class="card-heading"><span class="step-number">01</span><div><h2>从作业材料开始</h2><p>上传要求与评分标准，让每一段写作都有依据。</p></div></div>
+          <label class="dropzone" id="dropzone"><input id="assignment" type="file" accept=".pdf,.docx,.txt,.md" required><span class="upload-symbol">↥</span><strong id="assignment-label">将作业要求拖到这里</strong><span>或点击选择文件</span><small>PDF（含扫描件） · DOCX · TXT · MD / 最大 20 MiB</small></label>
+          <div class="secondary-uploads"><label class="mini-upload"><span>▤</span><b>评分标准 <em>推荐</em></b><small id="rubric-label">添加 Rubric</small><input id="rubrics" type="file" accept=".pdf,.docx,.txt,.md" multiple></label><label class="mini-upload"><span>▱</span><b>课程材料 <em>可选</em></b><small id="course-label">讲义、阅读或参考材料</small><input id="courses" type="file" accept=".pdf,.docx,.txt,.md" multiple></label></div>
+          <div class="form-footer"><span>材料将发送至你配置的模型 API</span><button class="primary" id="start-button" type="submit">开始解析 <span>↗</span></button></div>
+        </form><aside class="journey card"><div class="eyebrow">YOUR WRITING JOURNEY</div><h2>有条理地写，<br>有把握地前进。</h2><ol><li><span>1</span><div><b>读懂作业要求</b><p>提取题目、评分点和篇幅约束</p></div></li><li><span>2</span><div><b>自动规划大纲</b><p>先理清结构，再展开论述</p></div></li><li><span>3</span><div><b>自动逐章写作与核验</b><p>核验通过后自动进入下一部分</p></div></li></ol><div class="journey-note">随时离开，随时接着写。<br>每次生成、核验和修复都会保留。</div></aside></div>
+        <div class="feature-line"><span>◈ 材料可追溯</span><span>◷ 进度自动保存</span><span>✓ 自动核验与恢复</span><span>⌁ 自带 API Key</span></div>
+      </section>
+      <section id="workspace-panel" hidden>
+        <div class="workspace-heading"><div><div class="eyebrow">YOUR ASSIGNMENT</div><h1 id="run-title">正在读取作业</h1><p id="run-subtitle"></p></div><button class="secondary" id="refresh-run">刷新状态 ↻</button></div>
+        <div class="progress-bar" id="progress"></div>
+        <div class="busy-banner" id="busy-banner" hidden><span class="spinner"></span><div><b>正在处理，请稍候</b><small>材料解析、OCR 或模型生成可能需要一些时间。</small></div></div>
+        <div class="workspace-grid"><div class="card review-card"><div class="review-tabs" role="tablist"><button class="selected" data-tab="draft" role="tab" aria-selected="true">当前内容</button><button data-tab="sources" role="tab" aria-selected="false">材料与依据</button><button data-tab="library" role="tab" aria-selected="false">来源库</button><button data-tab="history" role="tab" aria-selected="false">修改记录</button><button data-tab="diagnostics" role="tab" aria-selected="false">运行诊断</button></div><div id="review-content"></div></div>
+        <aside class="review-side"><div class="card action-card"><div class="eyebrow">NEXT STEP</div><h2 id="action-title">等待下一步</h2><p id="action-description"></p><div id="approval-controls" hidden><label class="field-label" for="feedback">修改意见</label><textarea id="feedback" rows="4" placeholder="例如：增加具体案例，说明两种观点的差异。"></textarea><button class="secondary full" id="revise-button">按意见修改</button><button class="primary full" id="approve-button">确认并继续 →</button></div><div id="completion-controls" hidden><button class="primary full" id="complete-button">确认完成全文 ✓</button><button class="secondary full" id="export-button" disabled>导出 Word（.docx） ↓</button></div><button class="secondary full" id="resume-button">恢复任务 →</button><button class="secondary full" id="replan-button" hidden>保留记录，重新规划章节</button></div>
+          <section id="advisor-panel" class="card advisor-card" aria-labelledby="advisor-heading" hidden>
+            <div class="eyebrow">ASK ABOUT YOUR ASSIGNMENT</div><h2 id="advisor-heading">作业答疑</h2>
+            <p class="advisor-intro">不理解要求或大纲？结合本次材料问一问。</p>
+            <div id="advisor-history" class="advisor-history" role="log" aria-label="作业答疑记录" aria-live="polite"></div>
+            <form id="advisor-form">
+              <label class="field-label" for="advisor-question">你的问题</label>
+              <textarea id="advisor-question" rows="3" maxlength="4000" required placeholder="例如：批判性分析是什么意思？这一章应该写什么？"></textarea>
+              <button id="advisor-send" class="primary full" type="submit">发送问题 ↗</button>
+            </form>
+            <p id="advisor-hint" class="text-muted">使用当前模型 API，产生正常调用用量。回答供参考，确认仍由你操作。</p>
+            <p id="advisor-error" class="form-error" role="alert" hidden></p>
+          </section><div class="small-note">AI 自动检索、写作与核验。<br>版本与失败原因随任务保存。</div><div class="run-id" id="run-id"></div></aside></div>
+      </section>
+      <footer class="page-footer"><span>作业工坊 <span class="footer-line">/</span> 思考有序，写作有据。</span><span>LOCAL WORKSPACE · v0.1</span></footer>
+    </main>
+  </div>
+  <dialog id="config-dialog"><form id="config-form"><div class="dialog-heading"><div><div class="eyebrow">BRING YOUR OWN KEY</div><h2>连接你的模型</h2></div><button type="button" class="icon-button" id="close-config" aria-label="关闭">×</button></div><p class="dialog-description">使用你自己的 OpenAI 兼容 API，选择熟悉的模型。</p><label class="field-label" for="api-url">API 基础地址</label><input id="api-url" type="url" placeholder="https://your-service.example/v1" required><label class="field-label" for="api-model">模型名称</label><input id="api-model" placeholder="填写服务支持的模型名称" required><label class="field-label" for="api-max-input">输入字符上限</label><input id="api-max-input" type="number" min="1" step="1" value="300000" required><label class="field-label" for="api-timeout">单次请求超时（秒）</label><input id="api-timeout" type="number" min="1" max="1800" step="1" value="300" required><p class="privacy-note">默认等待 300 秒，可逐档提高至 1800 秒；实际响应速度取决于模型服务。</p><label class="field-label" for="api-key">API Key</label><input id="api-key" type="password" placeholder="输入你的 API Key" autocomplete="off" required><p class="privacy-note">网页配置仅保存在当前服务内存中，关闭服务后清除。密钥不会写入任务或浏览器存储。</p><div id="config-error" class="form-error" role="alert"></div><div class="dialog-footer"><button type="button" class="text-button" id="clear-config">清除会话配置</button><button type="submit" class="primary">保存配置 →</button></div></form></dialog>
+</body>
+</html>

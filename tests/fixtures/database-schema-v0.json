@@ -1,0 +1,580 @@
+{
+  "provenance": "F02-1：从当前 F01 生产源码提取的无版本结构；历史混合来源表由现有回归构造，不代表所有历史发布版本。",
+  "business_tables": {
+    "advisor_exchanges": {
+      "owner": "src/assignment_agent/advisor.py",
+      "sql": "CREATE TABLE IF NOT EXISTS advisor_exchanges (id INTEGER PRIMARY KEY, run_id TEXT NOT NULL, interrupt_id TEXT NOT NULL, question TEXT NOT NULL, answer TEXT, status TEXT NOT NULL, error TEXT, created_at TEXT NOT NULL, finished_at TEXT)",
+      "columns": [
+        [
+          0,
+          "id",
+          "INTEGER",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          2,
+          "interrupt_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          3,
+          "question",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          4,
+          "answer",
+          "TEXT",
+          0,
+          null,
+          0
+        ],
+        [
+          5,
+          "status",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          6,
+          "error",
+          "TEXT",
+          0,
+          null,
+          0
+        ],
+        [
+          7,
+          "created_at",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          8,
+          "finished_at",
+          "TEXT",
+          0,
+          null,
+          0
+        ]
+      ]
+    },
+    "completion_records": {
+      "owner": "src/assignment_agent/delivery.py",
+      "sql": "CREATE TABLE IF NOT EXISTS completion_records (run_id TEXT NOT NULL, content_hash TEXT NOT NULL, confirmed_at TEXT NOT NULL, PRIMARY KEY(run_id, content_hash))",
+      "columns": [
+        [
+          0,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          1
+        ],
+        [
+          1,
+          "content_hash",
+          "TEXT",
+          1,
+          null,
+          2
+        ],
+        [
+          2,
+          "confirmed_at",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "run_diagnostics": {
+      "owner": "src/assignment_agent/diagnostics.py",
+      "sql": "CREATE TABLE IF NOT EXISTS run_diagnostics (id INTEGER PRIMARY KEY, run_id TEXT NOT NULL, recorded_at TEXT NOT NULL, event TEXT NOT NULL, data TEXT NOT NULL)",
+      "columns": [
+        [
+          0,
+          "id",
+          "INTEGER",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          2,
+          "recorded_at",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          3,
+          "event",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          4,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "research_search_attempts": {
+      "owner": "src/assignment_agent/research_budget.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_search_attempts (id INTEGER PRIMARY KEY, run_id TEXT NOT NULL, chapter INTEGER, channel TEXT NOT NULL, recorded_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
+      "columns": [
+        [
+          0,
+          "id",
+          "INTEGER",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          2,
+          "chapter",
+          "INTEGER",
+          0,
+          null,
+          0
+        ],
+        [
+          3,
+          "channel",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          4,
+          "recorded_at",
+          "TEXT",
+          1,
+          "CURRENT_TIMESTAMP",
+          0
+        ]
+      ]
+    },
+    "research_candidates": {
+      "owner": "src/assignment_agent/research_library.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_candidates (run_id TEXT NOT NULL, context_hash TEXT NOT NULL, kind TEXT NOT NULL, id TEXT NOT NULL, data TEXT NOT NULL, PRIMARY KEY(run_id,context_hash,kind,id))",
+      "columns": [
+        [
+          0,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          1
+        ],
+        [
+          1,
+          "context_hash",
+          "TEXT",
+          1,
+          null,
+          2
+        ],
+        [
+          2,
+          "kind",
+          "TEXT",
+          1,
+          null,
+          3
+        ],
+        [
+          3,
+          "id",
+          "TEXT",
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "research_library_versions": {
+      "owner": "src/assignment_agent/research_library.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_library_versions (run_id TEXT NOT NULL, context_hash TEXT NOT NULL, artifact_id TEXT NOT NULL, version INTEGER NOT NULL, content_hash TEXT NOT NULL, kind TEXT NOT NULL, id TEXT NOT NULL, recorded_at TEXT NOT NULL, data TEXT NOT NULL, PRIMARY KEY(run_id,context_hash,artifact_id,version,content_hash,kind,id))",
+      "columns": [
+        [
+          0,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          1
+        ],
+        [
+          1,
+          "context_hash",
+          "TEXT",
+          1,
+          null,
+          2
+        ],
+        [
+          2,
+          "artifact_id",
+          "TEXT",
+          1,
+          null,
+          3
+        ],
+        [
+          3,
+          "version",
+          "INTEGER",
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          "content_hash",
+          "TEXT",
+          1,
+          null,
+          5
+        ],
+        [
+          5,
+          "kind",
+          "TEXT",
+          1,
+          null,
+          6
+        ],
+        [
+          6,
+          "id",
+          "TEXT",
+          1,
+          null,
+          7
+        ],
+        [
+          7,
+          "recorded_at",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          8,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "research_garbage": {
+      "owner": "src/assignment_agent/research_library.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_garbage (filename TEXT PRIMARY KEY)",
+      "columns": [
+        [
+          0,
+          "filename",
+          "TEXT",
+          0,
+          null,
+          1
+        ]
+      ]
+    },
+    "research_library_current": {
+      "owner": "src/assignment_agent/research_library.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_library_current (run_id TEXT, context_hash TEXT, kind TEXT, id TEXT, data TEXT NOT NULL, PRIMARY KEY(run_id,context_hash,kind,id))",
+      "columns": [
+        [
+          0,
+          "run_id",
+          "TEXT",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "context_hash",
+          "TEXT",
+          0,
+          null,
+          2
+        ],
+        [
+          2,
+          "kind",
+          "TEXT",
+          0,
+          null,
+          3
+        ],
+        [
+          3,
+          "id",
+          "TEXT",
+          0,
+          null,
+          4
+        ],
+        [
+          4,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "research_exclusions": {
+      "owner": "src/assignment_agent/research_library.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_exclusions (run_id TEXT, context_hash TEXT, kind TEXT, id TEXT, data TEXT NOT NULL, PRIMARY KEY(run_id,context_hash,kind,id))",
+      "columns": [
+        [
+          0,
+          "run_id",
+          "TEXT",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "context_hash",
+          "TEXT",
+          0,
+          null,
+          2
+        ],
+        [
+          2,
+          "kind",
+          "TEXT",
+          0,
+          null,
+          3
+        ],
+        [
+          3,
+          "id",
+          "TEXT",
+          0,
+          null,
+          4
+        ],
+        [
+          4,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "research_runs": {
+      "owner": "src/assignment_agent/research_store.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_runs (run_id TEXT PRIMARY KEY, context_hash TEXT NOT NULL, data TEXT NOT NULL)",
+      "columns": [
+        [
+          0,
+          "run_id",
+          "TEXT",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "context_hash",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          2,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "research_events": {
+      "owner": "src/assignment_agent/research_store.py",
+      "sql": "CREATE TABLE IF NOT EXISTS research_events (id INTEGER PRIMARY KEY, run_id TEXT NOT NULL, context_hash TEXT NOT NULL, recorded_at TEXT NOT NULL, data TEXT NOT NULL)",
+      "columns": [
+        [
+          0,
+          "id",
+          "INTEGER",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          2,
+          "context_hash",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          3,
+          "recorded_at",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          4,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    },
+    "writing_evidence": {
+      "owner": "src/assignment_agent/research_store.py",
+      "sql": "CREATE TABLE IF NOT EXISTS writing_evidence (id INTEGER PRIMARY KEY, run_id TEXT NOT NULL, context_hash TEXT NOT NULL, artifact_id TEXT NOT NULL, version INTEGER NOT NULL, recorded_at TEXT NOT NULL, data TEXT NOT NULL)",
+      "columns": [
+        [
+          0,
+          "id",
+          "INTEGER",
+          0,
+          null,
+          1
+        ],
+        [
+          1,
+          "run_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          2,
+          "context_hash",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          3,
+          "artifact_id",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          4,
+          "version",
+          "INTEGER",
+          1,
+          null,
+          0
+        ],
+        [
+          5,
+          "recorded_at",
+          "TEXT",
+          1,
+          null,
+          0
+        ],
+        [
+          6,
+          "data",
+          "TEXT",
+          1,
+          null,
+          0
+        ]
+      ]
+    }
+  },
+  "legacy_table": {
+    "name": "research_entries",
+    "columns_like": "research_candidates",
+    "provenance": "tests/test_research_library.py::test_legacy_migration_preserves_passed_history_and_resume_candidates"
+  },
+  "checkpoint_owner": "langgraph-checkpoint-sqlite 3.1.2",
+  "state_version": 1
+}

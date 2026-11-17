@@ -1,0 +1,25 @@
+# Python and build output
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+
+# Tool caches and reports
+.uv-cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Credentials and local assignment data
+.env
+.env.*
+!.env.example
+workspace/
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store

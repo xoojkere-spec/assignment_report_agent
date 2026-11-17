@@ -1,0 +1,57 @@
+[project]
+name = "assignment-agent"
+version = "0.1.0"
+description = "A controllable undergraduate assignment agent"
+readme = "README.md"
+authors = [
+    { name = "dcsnowfire", email = "2639134202@qq.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.162.0",
+    "httpx>=0.28.1",
+    "langgraph>=1.2.18",
+    "langgraph-checkpoint-sqlite>=3.1.2",
+    "lxml>=6.1.3",
+    "markdown-it-py>=4.2.0",
+    "numpy>=2.5.4",
+    "pillow>=13.0.0",
+    "pydantic>=2.14.2",
+    "pypdf>=6.21.4",
+    "pypdfium2>=5.14.0",
+    "python-docx>=1.2.0",
+    "python-dotenv>=1.2.4",
+    "python-multipart>=0.0.32",
+    "rapidocr-onnxruntime>=1.4.4",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+assignment-agent = "assignment_agent.cli:main"
+assignment-agent-web = "assignment_agent.web:main"
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+# skill 副本保留上游原文；其可选脚本不属于本项目执行代码。
+extend-exclude = ["skills"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.uv]
+link-mode = "copy"
